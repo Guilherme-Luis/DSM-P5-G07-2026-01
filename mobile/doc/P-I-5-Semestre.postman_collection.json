@@ -1,0 +1,1373 @@
+{
+  "info": {
+    "_postman_id": "39b25433-725f-4265-8ecf-4b9f0c1293a2",
+    "name": "API-Modelo-Padrao",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40904572"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login-User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.token) {\r",
+                  "    const token = response.token;\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"authTokenUser\", token);\r",
+                  "\r",
+                  "    const payload = JSON.parse(atob(token.split('.')[1]));\r",
+                  "    pm.collectionVariables.set(\"UserID\", payload.userId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"usuario@gmail.com\",\r\n  \"password\": \"Mn@123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login-User-ADM",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.token) {\r",
+                  "    const token = response.token;\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"authTokenUser\", token);\r",
+                  "\r",
+                  "    const payload = JSON.parse(atob(token.split('.')[1]));\r",
+                  "    pm.collectionVariables.set(\"UserID\", payload.userId);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"administrador@gmail.com\",\r\n  \"password\": \"Mn@123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register-User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.token) {\r",
+                  "    pm.collectionVariables.set(\"authTokenUser\", response.token);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"usuario123\",\r\n  \"email\": \"usuario@gmail.com\",\r\n  \"password\": \"Mn@123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout-User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/auth/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "Create-Companies",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.company) {\r",
+                  "    pm.collectionVariables.set(\"CompanieID\", response.company.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "12345",
+                  "type": "text",
+                  "uuid": "21ec783e-f14c-483f-bc8e-306f93b88167"
+                },
+                {
+                  "key": "cnpj",
+                  "value": "56.507.472/0001-90",
+                  "type": "text",
+                  "uuid": "a5419b75-b771-4892-97da-edca16d0713a"
+                },
+                {
+                  "key": "email",
+                  "value": "contato@empresaexemplo.com",
+                  "type": "text",
+                  "uuid": "32482e09-4eab-4b45-b1bd-42725e418e69"
+                },
+                {
+                  "key": "phone",
+                  "value": "99999-9999",
+                  "type": "text",
+                  "uuid": "52264177-adf2-4c0a-ac21-e1f4ae1e2657"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "86990459-0529-4a14-b6b0-f9421f656d4b",
+                  "src": "/C:/Users/Ecenture/Desktop/Arquivos Testes/Logo/200-200-2.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/companies",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "companies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get-Companies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/companies",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "companies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get-Companies-ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/companies/{{CompanieID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "companies",
+                "{{CompanieID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch-Companies",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "89c6c1ea-b2b1-44c4-aedb-af97f5d38621",
+                  "src": "/C:/Users/Ecenture/Desktop/Arquivos Testes/Logo/200-200-1.jpg"
+                },
+                {
+                  "key": "phone",
+                  "value": "99999-9999",
+                  "type": "text",
+                  "uuid": "d4497383-39e0-4899-8c9f-b98a1ce4723b"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/companies/{{CompanieID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "companies",
+                "{{CompanieID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete-Companies",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/companies/{{CompanieID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "companies",
+                "{{CompanieID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "List-Notification",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/notifications",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "notifications"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create-Notification",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.notification) {\r",
+                  "    pm.collectionVariables.set(\"NotificationID\", response.notification.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Pedido confirmado\",\r\n  \"message\": \"Seu pedido foi confirmado com sucesso\",\r\n  \"type\": \"EMAIL\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/notifications",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "notifications"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Read-Notification",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/notifications/{{NotificationID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "notifications",
+                "{{NotificationID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update-Notification",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"string\",\r\n  \"message\": \"teste do teste do teste\",\r\n  \"type\": \"EMAIL\",\r\n  \"read\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/notifications/{{NotificationID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "notifications",
+                "{{NotificationID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete-Notification",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/notifications/{{NotificationID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "notifications",
+                "{{NotificationID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Get-Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create-Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.items) {\r",
+                  "    pm.collectionVariables.set(\"OrderID\", response.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"items\": [\r\n    {\r\n      \"productId\": \"{{ProductID}}\",\r\n      \"quantity\": 10\r\n    }\r\n  ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update-Order",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"SHIPPED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/orders/{{OrderID}}/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "orders",
+                "{{OrderID}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete-Order",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/orders/{{OrderID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "orders",
+                "{{OrderID}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List-Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create-Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.product) {\r",
+                  "    pm.collectionVariables.set(\"ProductID\", response.product.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "banana",
+                  "type": "text",
+                  "uuid": "1b57d079-6ea0-41ac-afba-e7d3c0af2694"
+                },
+                {
+                  "key": "description",
+                  "value": "banana amarela",
+                  "type": "text",
+                  "uuid": "55191896-c7d4-4c0b-80ba-e68f1ff88334"
+                },
+                {
+                  "key": "price",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "5c2d9c7e-98a2-46b5-bcc9-15b4b20874c1"
+                },
+                {
+                  "key": "stock",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "b0ba0ae1-12c6-4b54-9df9-9e414739de81"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "8a81f9dd-0a97-499d-bb3b-7b1f1587d852",
+                  "src": "/C:/Users/Ecenture/Desktop/Arquivos Testes/Logo/200-200-2.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get-Product-ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/products/{{ProductID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "products",
+                "{{ProductID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update-Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "teste",
+                  "type": "text",
+                  "uuid": "d10156ec-fcc1-4bd0-a94c-36fd766661af"
+                },
+                {
+                  "key": "description",
+                  "value": "teste",
+                  "type": "text",
+                  "uuid": "19cc4e48-3f9b-4dc0-b91d-9c79451bdeeb"
+                },
+                {
+                  "key": "price",
+                  "value": "111",
+                  "type": "text",
+                  "uuid": "feed5411-47a7-40f0-ba52-544143637ab2"
+                },
+                {
+                  "key": "stock",
+                  "type": "text",
+                  "uuid": "d22f879f-44ed-4966-9fd8-4e18bba36046",
+                  "value": "111"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "5c65003d-6047-4e13-894e-751a390f782f",
+                  "src": "/C:/Users/Ecenture/Desktop/Arquivos Testes/Logo/200-200-1.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/products/{{ProductID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "products",
+                "{{ProductID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Disable-Product",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/products/{{ProductID}}/toggle",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "products",
+                "{{ProductID}}",
+                "toggle"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "List-All-Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get-User-ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/users/{{UserID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "users",
+                "{{UserID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update-User-ID",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"string\",\r\n  \"email\": \"guilherme2@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/users/{{UserID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "users",
+                "{{UserID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete-User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/users/{{UserID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "users",
+                "{{UserID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Role-User-ID",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"role\": \"USER\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/users/{{UserID}}/role",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "users",
+                "{{UserID}}",
+                "role"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "files",
+      "item": [
+        {
+          "name": "Create-File",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let response = pm.response.json();\r",
+                  "\r",
+                  "if (response.file) {\r",
+                  "    const token = response.token;\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"FileID\", response.file.id);\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "uuid": "87ebc668-0a30-49c5-8b79-ff82f0dd41d6",
+                  "src": "/C:/Users/Ecenture/Desktop/Arquivos Testes/PDFs/teste.pdf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3003/development/api/files",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "files"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List-All-Files",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/files",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "files"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List-File",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/files/{{FileID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "files",
+                "{{FileID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete-File",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/files/{{FileID}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "files",
+                "{{FileID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Download-File",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authTokenUser}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3003/development/api/files/{{FileID}}/download",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3003",
+              "path": [
+                "development",
+                "api",
+                "files",
+                "{{FileID}}",
+                "download"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "authTokenUser",
+      "value": ""
+    },
+    {
+      "key": "CompanieID",
+      "value": ""
+    },
+    {
+      "key": "NotificationID",
+      "value": ""
+    },
+    {
+      "key": "OrderID",
+      "value": ""
+    },
+    {
+      "key": "ProductID",
+      "value": ""
+    },
+    {
+      "key": "UserID",
+      "value": ""
+    },
+    {
+      "key": "FileID",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
