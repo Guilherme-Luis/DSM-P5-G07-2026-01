@@ -58,7 +58,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         email: _emailCtrl.text.trim(),
       );
 
-      auth.userName = _nameCtrl.text.trim();
+      // Atualiza o estado global para refletir no Dashboard
+      auth.updateUserData(name: _nameCtrl.text.trim());
       
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -75,8 +76,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus Dados'),

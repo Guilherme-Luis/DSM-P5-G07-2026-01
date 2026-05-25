@@ -18,13 +18,11 @@ class Company {
   });
 
   factory Company.fromJson(Map<String, dynamic> json) {
-    String safeString(dynamic value) {
-      if (value == null) return '';
-      if (value is String) return value;
-      if (value is Map) {
-        return (value['id'] ?? value['_id'] ?? value['name'] ?? value.toString()).toString();
-      }
-      return value.toString();
+    String parseId(dynamic id) {
+      if (id == null) return '';
+      if (id is String) return id;
+      if (id is Map) return (id[r'$oid'] ?? id['id'] ?? id['_id'] ?? id.toString()).toString();
+      return id.toString();
     }
 
     String? extractImageUrl(Map<String, dynamic> json) {
@@ -33,17 +31,16 @@ class Company {
                            json['imageUrl']?.toString();
 
       if (fileId == null || fileId.isEmpty) return null;
-
       if (fileId.startsWith('http')) return fileId;
       return '${ApiConstants.apiBase}/files/$fileId/download';
     }
 
     return Company(
-      id: safeString(json['id'] ?? json['_id']),
-      name: safeString(json['name']),
-      email: safeString(json['email']),
-      cnpj: safeString(json['cnpj']),
-      phone: safeString(json['phone']),
+      id: parseId(json['id'] ?? json['_id']),
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      cnpj: json['cnpj']?.toString() ?? '',
+      phone: json['phone']?.toString() ?? '',
       imageUrl: extractImageUrl(json),
     );
   }

@@ -39,11 +39,13 @@ void main() {
         Provider(create: (_) => CompanyService(apiClient)),
         
         // Providers de Estado
-        ChangeNotifierProvider(
+        ChangeNotifierProxyProvider<UserService, AuthProvider>(
           create: (context) => AuthProvider(
             authService: context.read<AuthService>(),
             tokenStorage: tokenStorage,
           )..init(),
+          update: (context, userService, authProvider) =>
+              authProvider!..updateService(userService),
         ),
         ChangeNotifierProvider(create: (_) => CartProvider()),
         ChangeNotifierProvider(

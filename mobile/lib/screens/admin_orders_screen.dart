@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/order.dart'; // Importação explícita do modelo
+import '../models/order.dart';
 import '../providers/orders_provider.dart';
 
 class AdminOrdersScreen extends StatefulWidget {
@@ -91,7 +91,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                           title: Text('Pedido #${order.id.substring(order.id.length > 6 ? order.id.length - 6 : 0)}'),
                           subtitle: Text('Status: ${order.status} - Total: R\$ ${order.total.toStringAsFixed(2)}'),
                           children: [
-                            ...order.items.map((OrderItemDetail item) => ListTile( // Tipagem explícita aqui
+                            ...order.items.map((OrderItemDetail item) => ListTile(
                               title: Text(item.product?.name ?? 'Produto removido'),
                               subtitle: Text('Quantidade: ${item.quantity}'),
                               trailing: Text('R\$ ${(item.price * item.quantity).toStringAsFixed(2)}'),
@@ -103,13 +103,13 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   ActionChip(
-                                    label: const Text('ENVIADO'),
+                                    label: const Text('ENVIAR'),
                                     onPressed: () => _updateStatus(order.id, 'SHIPPED'),
                                   ),
                                   ActionChip(
-                                    label: const Text('ENTREGUE'),
-                                    backgroundColor: Colors.green[100],
-                                    onPressed: () => _updateStatus(order.id, 'DELIVERED'),
+                                    label: const Text('CANCELAR'),
+                                    backgroundColor: Colors.red[50],
+                                    onPressed: () => _updateStatus(order.id, 'CANCELED'),
                                   ),
                                   IconButton(
                                     icon: const Icon(Icons.delete_outline, color: Colors.red),

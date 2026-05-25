@@ -16,8 +16,15 @@ class Order {
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
+    String parseId(dynamic id) {
+      if (id == null) return '';
+      if (id is String) return id;
+      if (id is Map) return (id[r'$oid'] ?? id['id'] ?? id['_id'] ?? id.toString()).toString();
+      return id.toString();
+    }
+
     return Order(
-      id: json['id']?.toString() ?? '',
+      id: parseId(json['id'] ?? json['_id']),
       status: json['status']?.toString() ?? 'PENDING',
       total: (json['total'] as num?)?.toDouble() ?? 0.0,
       createdAt: DateTime.parse(json['createdAt'] ?? DateTime.now().toIso8601String()),
@@ -43,7 +50,7 @@ class OrderItemDetail {
 
   factory OrderItemDetail.fromJson(Map<String, dynamic> json) {
     return OrderItemDetail(
-      productId: json['productId']?.toString() ?? '',
+      productId: (json['productId'] ?? json['product']?['id'] ?? '').toString(),
       quantity: (json['quantity'] as num?)?.toInt() ?? 0,
       price: (json['price'] as num?)?.toDouble() ?? 
              (json['product']?['price'] as num?)?.toDouble() ?? 0.0,
