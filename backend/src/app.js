@@ -3,28 +3,21 @@ import cors from "cors";
 import routes from "./routes/index.js";
 import { swaggerDocs } from "./config/swagger.js";
 
+
 const app = express();
 const { NODE_ENV } = process.env;
-
-console.log("🚀 App.js carregado");
-console.log("📦 NODE_ENV:", NODE_ENV);
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-console.log("🟡 Registrando rotas base...");
+// Rotas
 app.use(`/${NODE_ENV}/api`, routes);
 
-console.log("🟡 Inicializando Swagger...");
 swaggerDocs(app);
 
-// =====================
-// HEALTH CHECK DEBUG
-// =====================
+// Health check
 app.get(`/`, (req, res) => {
-    console.log("📡 GET / health check chamado");
-
     res.json({
         service: `pi-services-api`,
         status: `running`,
@@ -33,16 +26,14 @@ app.get(`/`, (req, res) => {
     });
 });
 
-// =====================
-// ERROR HANDLER DEBUG
-// =====================
+// Error handler
 app.use((err, req, res, next) => {
-    console.error("🔥 EXPRESS ERROR HANDLER:");
     console.error(err);
-
-    res.status(err.status || 500).json({
-        message: err.message || "Internal Server Error",
+    const status = err.status || 500;
+    res.status(status).json({
+        message: err.message || `Internal Server Error`,
     });
 });
 
+// exporta o app
 export default app;
