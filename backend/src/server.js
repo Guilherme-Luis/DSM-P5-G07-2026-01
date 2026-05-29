@@ -1,13 +1,5 @@
 import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({
-    path: path.resolve(__dirname, "../.env")
-});
+dotenv.config();
 
 import express from "express";
 import { connectDB } from "./config/db.js";
@@ -19,16 +11,15 @@ const { PORT, NODE_ENV } = process.env;
 
 app.use(express.json());
 
+
 async function startServer() {
     try {
         await connectDB();
         app.use(`/${NODE_ENV}/api`, routes);
         swaggerDocs(app);
-
         app.listen(PORT, () => {
             console.log(`Server running in ${NODE_ENV} mode on port ${PORT}`);
         });
-
     } catch (error) {
         console.error(`Failed to start server: ${error.message}`);
         process.exit(1);
